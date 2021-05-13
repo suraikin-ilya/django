@@ -141,10 +141,14 @@ class OrderAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ("order_id", "client_id", "car", "order_status")
     search_fields = ['car']
     list_filter = ['car', 'order_id']
+    actions = ['restore']
     pass
 
     def get_ordering(self, request):
         return [Lower('order_id')]
+
+    def restore(self, request, queryset):
+        queryset.update(order_status='Отклонён')
 
     def get_import_formats(self):
         formats = (
@@ -160,6 +164,7 @@ class OrderAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         )
         return [f for f in formats if f().can_export()]
 
+    restore.short_description = 'Отклонить выбранные заказы'
 
 @admin.register(Client)
 class ClientAdmin(ImportExportModelAdmin, admin.ModelAdmin):
