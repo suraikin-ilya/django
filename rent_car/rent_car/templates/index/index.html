@@ -1,5 +1,18 @@
 {% extends 'index/base.html' %}
 {% block title %} Главная {%endblock%}
 {% block main %}
-
+    <div class='container mt-4'>
+        <h1>Главная</h1>
+        <div class='row'>
+            {% for car in cars %}
+            <div class='col-3 m-4 p-3'>
+                    <h3 >{{car.car_id}}: {{car.brand}}</h3>
+                    <p>Коробка  {{car.type}} </p>
+                    <img class='img-fluid rounded ' src='{{photos.url}}'>
+                    <h5 class="alert alert-primary">Цена  {{car.price}} </h5>
+                    <button type="button" class="btn btn-primary">Арендовать</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
