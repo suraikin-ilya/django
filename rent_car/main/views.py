@@ -1,14 +1,16 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Car, Photo
+from .models import Car
 from .serializers import CarSerializer, OrderSerializer
-# from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+from django.http import HttpResponse
 
 
 def index(request):
     cars = Car.objects.all()
-    photos = Photo.objects.all()
-    return render(request, 'index/index.html', {'cars': cars, 'photos': photos})
+    return render(request, 'index/index.html', {'cars': cars})
 
 
 def landing(request):
@@ -21,3 +23,9 @@ class CarView(generics.CreateAPIView):
 
 class OrderView(generics.CreateAPIView):
     serializer_class = OrderSerializer
+
+
+def rent(request, car_id):
+
+    return render(request, 'index/rent.html')
+

@@ -2,19 +2,14 @@
 {% block title %} Главная {%endblock%}
 {% block main %}
     <div class='container mt-4'>
-        <h1>Главная</h1>
+        <h2>Главная</h2>
         <div class='row'>
             {% for car in cars %}
-            <div class='col-3 m-4 p-3'>
-                    <h3 >{{car.car_id}}: {{car.brand}}</h3>
-                    <p>Коробка  {{car.type}} </p>
-                    {% with car.photos.all as photos %}
-                    {% for photo in photos %}
-                        <img class='img-fluid rounded mb-3' src='{{photo.url}}' alt="{{car.brand}}">
-                    {% endfor %}
-                    {% endwith %}
-                    <h5 class="alert alert-primary">Цена  {{car.price}} </h5>
-                    <button type="button" class="btn btn-primary">Арендовать</button>
+            <div class='col-3 m-5 p-4'>
+                    <h3 > {{car.brand}} {{car.model}}</h3>
+                        <img class='img-fluid rounded mb-3' src='{{car.photo_url}}' alt="{{car.brand}}">
+                    <h5 class="alert alert-primary">Цена  {{car.price}} Р</h5>
+                    <a href="{% url 'rent' car.car_id %}" class="btn btn-primary">Арендовать </a>
             </div>
             {% endfor %}
         </div>

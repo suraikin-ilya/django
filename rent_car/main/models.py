@@ -1,15 +1,15 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Brand(models.Model):
     brand_id = models.AutoField(primary_key=True)
     brand = models.CharField("Марка автомобиля", max_length=50)
-    models.CharField("Модель", max_length=50)
     description = models.TextField("Описание")
 
     class Meta:
-        verbose_name = ("Модель")
-        verbose_name_plural = ("Модели")
+        verbose_name = ("Марка авто")
+        verbose_name_plural = ("Марки авто")
 
     def __str__(self):
         return str(self.brand)
@@ -21,18 +21,6 @@ class Brand(models.Model):
 #     ('r', 'Роботизированная'),
 #     ('v', 'Вариативная')
 # )
-
-
-class Transmission(models.Model):
-    transmission_id = models.AutoField(primary_key=True)
-    type = models.CharField(max_length=50)
-
-    class Meta:
-        verbose_name = ("Трансмиссия")
-        verbose_name_plural = ("Трансмиссии")
-
-    def __str__(self):
-        return self.type
 
 
 class Color(models.Model):
@@ -53,25 +41,14 @@ class Color(models.Model):
 # )
 
 
-class Status(models.Model):
-    status_id = models.AutoField(primary_key=True)
-    car_status = models.CharField(max_length=50)
-
-    class Meta:
-        verbose_name = ("Статус")
-        verbose_name_plural = ("Статусы")
-
-    def __str__(self):
-        return self.car_status
-
-
 class Car(models.Model):
     car_id = models.AutoField(primary_key=True)
     brand = models.ForeignKey(Brand, on_delete=models.DO_NOTHING)
-    car_status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    model = models.CharField("Модель автомобиля", max_length=50, default='car model')
     price = models.IntegerField("Стоимость аренды")
+    photo_url = models.TextField("photo_url", default='photo_url')
+    car_description = models.TextField("description_car", default='car description')
     color_name = models.ForeignKey(Color, on_delete=models.DO_NOTHING)
-    type = models.ForeignKey(Transmission, on_delete=models.DO_NOTHING)
 
     class Meta:
         verbose_name = ("Автомобиль")
@@ -80,45 +57,24 @@ class Car(models.Model):
     def __str__(self):
         return str(self.brand)
 
-
-class Photo(models.Model):
-    photo_id = models.AutoField(primary_key=True)
-    car_id = models.ForeignKey(Car, on_delete=models.CASCADE)
-    url = models.TextField("url")
-
-    class Meta:
-        verbose_name = ("Фото")
-        verbose_name_plural = ("Фото")
-
-    def __str__(self):
-        return str(self.car_id)
+    def get_absolute_url(self):
+        return reverse('car', kwargs={'car_id': self.pk})
 
 
-class Client(models.Model):
-    client_id = models.AutoField(primary_key=True)
+class User(models.Model):
+    user_id = models.AutoField(primary_key=True)
     name = models.CharField("Имя", max_length=100)
     surname = models.CharField("Фамилия", max_length=100)
+    mail = models.CharField("e-mail", max_length=100)
+    password = models.CharField("password", max_length=100)
+    phone = models.CharField("phone", max_length=100)
 
     class Meta:
-        verbose_name = ("Клиент")
-        verbose_name_plural = ("Клиенты")
+        verbose_name = ("Пользователь")
+        verbose_name_plural = ("Пользователь")
 
     def __str__(self):
         return str(self.name + " " + self.surname)
-
-
-class Contact(models.Model):
-    client_id = models.ForeignKey(Client, on_delete=models.CASCADE)
-    phone = models.CharField("Телефон", max_length=50)
-    e_mail = models.CharField("e-mail", max_length=50)
-    address = models.CharField("Адрес", max_length=100)
-
-    class Meta:
-        verbose_name = ("Контакт")
-        verbose_name_plural = ("Контакты")
-
-    def __str__(self):
-        return str(self.client_id)
 
 
 # ORDER_STATUS_CHOICE = (
@@ -143,9 +99,10 @@ class OrderStatus(models.Model):
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    client_id = models.ForeignKey(Client, on_delete=models.DO_NOTHING)
+    user_id = models.ForeignKey(User, on_delete=models.DO_NOTHING, default='user id')
     car = models.ForeignKey(Car, on_delete=models.DO_NOTHING)
     order_status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = ("Заказ")
