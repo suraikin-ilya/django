@@ -1,9 +1,29 @@
 {% extends 'index/base.html' %}
 {% block title %} Аренда машины {%endblock%}
 {% block main %}
+
+
     <div class='container mt-4'>
         <h2>Аренда машины</h2>
         <hr>
-        <h3 > {{car.id}} </h3>
+        {% for car in cars %}
+        {% with car.car_id as request.resolver_match.kwargs.car_id %}
+<!--        {% if car.car_id == request.resolver_match.kwargs.car_id %}-->
+        <div>
+        <h3> {{car.brand}} {{car.model}}</h3>
+            <div class="alert alert-primary" role="alert" style="max-width: 20%">
+        <h5 > Цена {{car.price}} р</h5>
+        </div>
+
+        <img src="{{car.photo_url}}" class="rounded float-left" alt="" style="max-height: 400px">
+
+            <p class="mt-4" style="max-width: 60%; text-align: left">{{car.car_description}}</p>
+
+        </div>
+
+<!--        {% endif %}-->
+        {% endwith %}
+        {% endfor %}
+    {{car.car_id}}
     </div>
 {% endblock %}
