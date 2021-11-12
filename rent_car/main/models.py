@@ -112,3 +112,31 @@ class Order(models.Model):
 
     # def __str__(self):
     #     return str(self.order_status)
+
+
+class News(models.Model):
+    news_id = models.AutoField(primary_key=True)
+    news_title = models.CharField(max_length=200, default='Заголовок')
+    news_photo_url = models.CharField(max_length=200, default='url')
+    news_text = models.TextField("Текст новости", default='news_text')
+
+    class Meta:
+        verbose_name = ("Новость")
+        verbose_name_plural = ("Новости")
+
+    def __str__(self):
+        return str(self.news_title)
+
+
+class Stock(models.Model):
+    stock_id = models.AutoField(primary_key=True)
+    stock_title = models.CharField(max_length=200, default='Заголовок акции')
+    stock_photo_url = models.CharField(max_length=200, default='url')
+    stock_text = models.TextField("Текст акции", default='stock_text')
+
+    class Meta:
+        verbose_name = ("Акция")
+        verbose_name_plural = ("Акции")
+
+    def __str__(self):
+        return str(self.stock_title)

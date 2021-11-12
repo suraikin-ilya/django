@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Brand, Color, Car, Order, User
+from .models import Brand, Color, Car, Order, User, News, Stock
 from django.db.models.functions import Lower
 from import_export.admin import ImportExportModelAdmin
 from import_export.formats import base_formats
@@ -146,6 +146,57 @@ class ClientAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         )
         return [f for f in formats if f().can_export()]
 
+
+@admin.register(News)
+class NewsAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ('news_id', 'news_title', 'news_text', 'news_photo_url')
+    list_filter = ['news_id', 'news_title']
+    search_fields = ['news_title', 'news_text']
+    pass
+
+    def get_ordering(self, request):
+        return [Lower('news_id')]
+
+    def get_import_formats(self):
+        formats = (
+                  base_formats.XLS,
+                  base_formats.XLSX,
+            )
+        return [f for f in formats if f().can_import()]
+
+    def get_export_formats(self):
+        formats = (
+                  base_formats.XLS,
+                  base_formats.XLSX,
+            )
+        return [f for f in formats if f().can_export()]
+
+
+@admin.register(Stock)
+class StockAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ('stock_id', 'stock_title', 'stock_text', 'stock_photo_url')
+    list_filter = ['stock_id', 'stock_title']
+    search_fields = ['stock_title', 'stock_text']
+    pass
+
+    def get_ordering(self, request):
+        return [Lower('stock_id')]
+
+    def get_import_formats(self):
+        formats = (
+                  base_formats.XLS,
+                  base_formats.XLSX,
+            )
+        return [f for f in formats if f().can_import()]
+
+    def get_export_formats(self):
+        formats = (
+                  base_formats.XLS,
+                  base_formats.XLSX,
+            )
+        return [f for f in formats if f().can_export()]
+
+
 #
 # @admin.register(User)
 # class ClientAdmin(ImportExportModelAdmin, admin.ModelAdmin):
@@ -170,3 +221,4 @@ class ClientAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 #             base_formats.XLSX,
 #         )
 #         return [f for f in formats if f().can_export()]
+
