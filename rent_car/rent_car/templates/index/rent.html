@@ -1,10 +1,10 @@
 {% extends 'index/base.html' %}
-{% block title %} Аренда машины {%endblock%}
+{% block title %} Информация о машине {%endblock%}
 {% block main %}
 
 
     <div class='container mt-4'>
-        <h2>Аренда машины</h2>
+        <h2>Информация о машине</h2>
         <hr>
         {% for car in cars %}
         {% with car.car_id as request.resolver_match.kwargs.car_id %}
@@ -25,5 +25,6 @@
         {% endwith %}
         {% endfor %}
     {{car.car_id}}
+
     </div>
 {% endblock %}

@@ -27,13 +27,21 @@
               <li class="nav-item">
         <a class="nav-link" href="/admin">Админка</a>
       </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+        <a class="nav-link">{{user.username}}</a>
+      </li>
+         <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+      </li>
+        {% else %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
       </li>
               <li class="nav-item">
         <a class="nav-link" href="{% url 'login' %}">Войти</a>
       </li>
-
+        {% endif %}
 <!--        <li class="nav-item">-->
 <!--        <a class="nav-link" href="{% url 'car' %}">Rest Car</a>-->
 <!--      </li>-->

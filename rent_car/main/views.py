@@ -45,18 +45,25 @@ class RegisterUser(CreateView):
 
 
 class LoginUser(LoginView):
-    form_class = LoginUserForm
-    template_name = 'women/login.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Авторизация")
-        return dict(list(context.items()) + list(c_def.items()))
-
-    def get_success_url(self):
-        return reverse_lazy('home')
+    form_class = AuthenticationForm
+    template_name = 'index/login.html'
 
 
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+
+def order_car(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect('')
+            except:
+                form.add_error(None, 'Заказ успешно отправлен')
+
+    else:
+        form = OrderForm()
+    return render(request, 'index/order_car.html', {'form': form})

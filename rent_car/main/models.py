@@ -85,28 +85,30 @@ class User(models.Model):
 # )
 
 
-class OrderStatus(models.Model):
-    order_id = models.AutoField(primary_key=True)
-    order_status = models.CharField(max_length=50)
-
-    class Meta:
-        verbose_name = ("Статус заказа")
-        verbose_name_plural = ("Статусы заказа")
-
-    def __str__(self):
-        return self.order_status
+# class OrderStatus(models.Model):
+#     order_id = models.AutoField(primary_key=True)
+#     order_status = models.CharField(max_length=50)
+#
+#     class Meta:
+#         verbose_name = ("Статус заказа")
+#         verbose_name_plural = ("Статусы заказа")
+#
+#     def __str__(self):
+#         return self.order_status
 
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.DO_NOTHING, default='user id')
+    user_name = models.CharField(max_length=100, default='Имя пользователя')
+    user_phone = models.CharField(max_length=20, default='Телефон')
+    comment = models.TextField("Комментарий", default='comment')
     car = models.ForeignKey(Car, on_delete=models.DO_NOTHING)
-    order_status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
+    # order_status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE, blank=True)
     date = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = ("Заказ")
         verbose_name_plural = ("Заказы")
 
-    def __str__(self):
-        return str(self.order_status)
+    # def __str__(self):
+    #     return str(self.order_status)

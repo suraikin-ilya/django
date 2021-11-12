@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Brand, Color, Car,  User, OrderStatus, Order
+from .models import Brand, Color, Car, Order, User
 from django.db.models.functions import Lower
 from import_export.admin import ImportExportModelAdmin
 from import_export.formats import base_formats
@@ -81,21 +81,21 @@ class ColorAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         return [f for f in formats if f().can_export()]
 
 
-@admin.register(OrderStatus)
-class OrderStatusAdmin(admin.ModelAdmin):
-    list_display = ('order_id', "order_status")
-    list_filter = ['order_id', 'order_status']
-    pass
-
-    def get_ordering(self, request):
-        return [Lower('order_id')]
+# @admin.register(OrderStatus)
+# class OrderStatusAdmin(admin.ModelAdmin):
+#     list_display = ('order_id', "order_status")
+#     list_filter = ['order_id', 'order_status']
+#     pass
+#
+#     def get_ordering(self, request):
+#         return [Lower('order_id')]
 
 
 @admin.register(Order)
 class OrderAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ("order_id", "user_id", "car", "order_status", "date")
-    search_fields = ['car']
-    list_filter = ['car', 'order_id']
+    list_display = ("order_id", "user_name", "user_phone", "comment", "car", "date")
+    search_fields = ['car', "user_name", "user_phone", "comment"]
+    list_filter = ['car', 'order_id', "date"]
     actions = ['restore']
     pass
 
@@ -146,3 +146,27 @@ class ClientAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         )
         return [f for f in formats if f().can_export()]
 
+#
+# @admin.register(User)
+# class ClientAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+#     list_display = ("user_id", "name", "surname", "mail", "password", "phone")
+#     search_fields = ['name', 'surname', 'mail', 'phone']
+#     list_filter = ['name', 'surname', 'user_id']
+#     pass
+#
+#     def get_ordering(self, request):
+#      return [Lower('user_id')]
+#
+#     def get_import_formats(self):
+#         formats = (
+#             base_formats.XLS,
+#             base_formats.XLSX,
+#         )
+#         return [f for f in formats if f().can_import()]
+#
+#     def get_export_formats(self):
+#         formats = (
+#             base_formats.XLS,
+#             base_formats.XLSX,
+#         )
+#         return [f for f in formats if f().can_export()]

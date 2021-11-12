@@ -6,11 +6,14 @@
         <div class='row'>
             {% for car in cars %}
             <div class='col-3 m-5 p-4'>
+                <a href="{% url 'rent' car.car_id %}" class="" style="text-decoration: none">
                     <h3 > {{car.brand}} {{car.model}}</h3>
                         <img class='img-fluid rounded mb-3' src='{{car.photo_url}}' alt="{{car.brand}}">
                     <h5 class="alert alert-primary">Цена  {{car.price}} Р</h5>
-                    <a href="{% url 'rent' car.car_id %}" class="btn btn-primary">Арендовать </a>
+                    <a href="{% url 'order_car' %}" class="btn btn-primary">Арендовать </a>
+                </a>
             </div>
+
             {% endfor %}
         </div>
     </div>
