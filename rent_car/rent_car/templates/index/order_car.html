@@ -3,10 +3,10 @@
 {% block main %}
     <div class='container mt-4'>
         <h2>Аренда машины</h2>
-        <form action="{% url 'order_car'%}" method="post">
+        <form action="{% url 'order_car' %}" method="post" class="needs-validation mt-4">
             {% csrf_token %}
             {{form.as_p}}
-            <button type="submit">Добавить</button>
+            <button type="submit" class="w-10 btn btn-primary btn-lg">Добавить</button>
         </form>
 
     </div>
