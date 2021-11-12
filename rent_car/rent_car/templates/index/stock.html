@@ -1,0 +1,24 @@
+{% extends 'index/base.html' %}
+{% block title %} Акции {%endblock%}
+{% block main %}
+    <div class='container mt-4'>
+        <h2>Акции</h2>
+        <div class='row mt-4'>
+            {% for stock in stock %}
+                <div class="card mb-3" style="max-width: 640px; margin-right: 10px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img style="max-width: 200px;margin-top: 15px" src="{{stock.stock_photo_url}}"  alt="">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">{{stock.stock_title}}</h5>
+                        <p class="card-text">{{stock.stock_text}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

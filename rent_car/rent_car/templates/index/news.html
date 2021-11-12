@@ -1,0 +1,24 @@
+{% extends 'index/base.html' %}
+{% block title %} Новости {%endblock%}
+{% block main %}
+    <div class='container mt-4'>
+        <h2>Новости</h2>
+        <div class='row mt-4'>
+            {% for new in news %}
+                <div class="card mb-3" style="max-width: 640px; margin-right: 10px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img style="max-width: 200px;margin-top: 15px" src="{{new.news_photo_url}}"  alt="">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">{{new.news_title}}</h5>
+                        <p class="card-text">{{new.news_text}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

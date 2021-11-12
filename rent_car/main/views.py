@@ -67,3 +67,13 @@ def order_car(request):
     else:
         form = OrderForm()
     return render(request, 'index/order_car.html', {'form': form})
+
+
+def news(request):
+    new = News.objects.all()
+    return render(request, 'index/news.html', {'news': new})
+
+
+def stock(request):
+    stocks = Stock.objects.all()
+    return render(request, 'index/stock.html', {'stock': stocks})
